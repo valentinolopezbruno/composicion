@@ -11,20 +11,18 @@ type Invoice struct {
 	city    string
 	total   float64
 	client  customer.Customer
-	item    []invoiceitem.Item
+	item    invoiceitem.Items
 }
 
-func New(country, city string, client customer.Customer, item []invoiceitem.Item) Invoice {
+func (i *Invoice) SetTotal() { //funcion para setear valor total del slice item
+	i.total = i.item.Total()
+}
+
+func New(country, city string, client customer.Customer, item invoiceitem.Items) Invoice {
 	return Invoice{
 		country: country,
 		city:    city,
 		client:  client,
 		item:    item,
-	}
-}
-
-func (i *Invoice) SetTotal() {
-	for _, item := range i.item {
-		i.total += item.Value()
 	}
 }
